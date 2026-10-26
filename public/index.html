@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>나의 기록</title>
+  <meta name="description" content="말하면 기록되는 나만의 기록 앱">
+  <meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E0E10" media="(prefers-color-scheme: dark)">
+
+  <!-- 폰에 앱으로 설치하기 위한 설정 -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-title" content="나의 기록">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <!-- 글꼴: Pretendard (SIL Open Font License 1.1) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="icon-button" id="menu-button" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="menu">☰</button>
+    <h1 class="topbar-title" id="view-title">나의 기록</h1>
+  </header>
+
+  <!-- 메뉴 (☰를 누르면 왼쪽에서 열려요) -->
+  <div class="menu-backdrop" id="menu-backdrop"></div>
+  <nav class="menu" id="menu" aria-label="메뉴" inert>
+    <p class="menu-app-name">나의 기록</p>
+    <button class="menu-item" type="button" data-view="home">🏠 홈</button>
+    <button class="menu-item" type="button" data-view="calendar">📅 달력</button>
+    <button class="menu-item" type="button" data-view="settings">⚙️ 설정</button>
+  </nav>
+
+  <!-- 홈·달력·설정 화면이 여기에 그려져요 -->
+  <main class="content" id="content"></main>
+
+  <button class="add-button" id="add-button" type="button" aria-label="새 기록">＋</button>
+
+  <!-- 입력창 (＋를 누르거나 기록을 누르면 아래에서 올라와요) -->
+  <dialog class="sheet" id="editor">
+    <form id="editor-form">
+      <h2 class="sheet-title" id="editor-title">새 기록</h2>
+      <div class="field-row">
+        <label class="field">날짜
+          <input type="date" name="date" required>
+        </label>
+        <label class="field">시각 <span class="optional">(선택)</span>
+          <input type="time" name="time">
+        </label>
+      </div>
+      <label class="field">종류
+        <input type="text" name="category" list="category-list" placeholder="예: 운동, 식단, 일기" autocomplete="off" maxlength="50">
+      </label>
+      <datalist id="category-list"></datalist>
+      <label class="field">메모
+        <textarea name="memo" rows="4" placeholder="무엇을 기록할까요?" maxlength="5000"></textarea>
+      </label>
+      <p class="form-error" id="editor-error" role="alert"></p>
+      <div class="sheet-actions">
+        <button class="button danger" type="button" id="delete-button" hidden>삭제</button>
+        <button class="button ghost" type="button" id="cancel-button">취소</button>
+        <button class="button primary" type="submit">저장</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- 아이폰 설치 안내 (아이폰은 웹페이지가 설치 창을 띄울 수 없어서 방법을 알려줘요) -->
+  <dialog class="sheet" id="install-guide">
+    <h2 class="sheet-title">홈 화면에 앱 추가하기</h2>
+    <ol class="install-steps" id="install-steps"></ol>
+    <div class="sheet-actions">
+      <button class="button primary" type="button" id="install-guide-close">확인</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

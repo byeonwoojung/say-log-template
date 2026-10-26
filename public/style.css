@@ -1,0 +1,524 @@
+/* ──────────────────────────────────────────────
+   디자인 토큰
+   이 값들만 바꿔도 앱 전체 분위기가 바뀌어요.
+   ────────────────────────────────────────────── */
+:root {
+  --color-point: #1f1f22;      /* 포인트 색: 중요한 버튼 */
+  --color-on-point: #ffffff;   /* 포인트 색 위의 글자 */
+  --color-bg: #f5f5f7;         /* 바탕 */
+  --color-surface: #ffffff;    /* 카드, 입력창 */
+  --color-text: #1c1c1e;       /* 기본 글자 */
+  --color-subtext: #6e6e73;    /* 보조 글자 */
+  --color-line: #e5e5ea;       /* 테두리, 구분선 */
+  --color-danger: #e5484d;     /* 삭제 */
+
+  --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+    "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --font-size: 16px;
+
+  --radius-card: 16px;         /* 카드·창 모서리 */
+  --radius-button: 14px;       /* 버튼 모서리 */
+  --space: 16px;               /* 기본 간격 */
+  --shadow: 0 1px 3px rgb(0 0 0 / 0.06);
+  --content-width: 560px;      /* 화면 최대 너비 */
+}
+
+/* 폰이 다크 모드면 자동으로 어두워져요 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-point: #f2f2f7;     /* 다크 모드에서는 밝은 버튼 */
+    --color-on-point: #1c1c1e;
+    --color-bg: #0e0e10;
+    --color-surface: #1c1c1e;
+    --color-text: #f2f2f7;
+    --color-subtext: #98989f;
+    --color-line: #2c2c2e;
+    --shadow: none;
+  }
+}
+
+/* ── 기본 ── */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  color-scheme: light dark;
+}
+
+body {
+  font: var(--font-size) / 1.5 var(--font);
+  padding: env(safe-area-inset-top) 0 calc(96px + env(safe-area-inset-bottom));
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* ── 위쪽 막대 ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 12px var(--space);
+  background: var(--color-bg);
+}
+
+.topbar-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background: var(--color-line);
+}
+
+/* ── 메뉴 ── */
+.menu {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 30;
+  width: min(280px, 80vw);
+  padding: calc(20px + env(safe-area-inset-top)) 12px 20px;
+  background: var(--color-surface);
+  transform: translateX(-100%);
+  transition: transform 0.2s ease;
+}
+
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: rgb(0 0 0 / 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+body.menu-open .menu {
+  transform: none;
+}
+
+body.menu-open .menu-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-app-name {
+  margin: 0 12px 16px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.menu-item {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background: var(--color-bg);
+  font-weight: 600;
+}
+
+/* ── 본문 ── */
+.content {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--space);
+}
+
+.claude-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  margin: 8px 0 4px;
+  border-radius: var(--radius-button);
+  background: var(--color-point);
+  color: var(--color-on-point);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.section-title {
+  margin: 24px 4px 8px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.date-title {
+  margin: 16px 4px 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-subtext);
+}
+
+.empty {
+  margin: 0 4px;
+  padding: 16px 0;
+  color: var(--color-subtext);
+}
+
+.install-button {
+  display: block;
+  width: 100%;
+  height: 52px;
+  margin-top: 32px;
+  border: 1px dashed var(--color-line);
+  border-radius: var(--radius-button);
+  background: none;
+  color: var(--color-subtext);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ── 기록 카드 ── */
+.card {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 14px var(--space);
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+  text-align: left;
+  cursor: pointer;
+}
+
+.card:active {
+  transform: scale(0.99);
+}
+
+.card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-category {
+  font-weight: 700;
+}
+
+.card-time {
+  color: var(--color-subtext);
+  font-size: 14px;
+}
+
+.card-memo {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-subtext);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── ＋ 버튼 ── */
+.add-button {
+  position: fixed;
+  right: max(var(--space), calc((100vw - var(--content-width)) / 2 + var(--space)));
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.12);
+  font-size: 26px;
+  cursor: pointer;
+}
+
+/* ── 달력 ── */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+.calendar-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.weekdays,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+
+.weekdays {
+  margin-bottom: 4px;
+  color: var(--color-subtext);
+  font-size: 13px;
+}
+
+.day {
+  position: relative;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  cursor: pointer;
+}
+
+.day.blank {
+  cursor: default;
+}
+
+.day.today .day-number {
+  color: var(--color-point);
+  font-weight: 700;
+}
+
+.day.selected {
+  background: var(--color-point);
+}
+
+.day.selected .day-number {
+  color: var(--color-on-point);
+}
+
+.dot {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-point);
+  transform: translateX(-50%);
+}
+
+.day.selected .dot {
+  background: var(--color-on-point);
+}
+
+/* ── 설정 ── */
+.panel {
+  margin-bottom: 12px;
+  padding: var(--space);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+}
+
+.panel-title {
+  margin: 0 0 8px;
+  font-size: 17px;
+}
+
+.panel p {
+  margin: 0 0 8px;
+  color: var(--color-subtext);
+}
+
+.panel .panel-note {
+  margin-bottom: 16px;
+  color: var(--color-text);
+}
+
+/* ── 버튼 ── */
+.button {
+  height: 48px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--radius-button);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.button.primary {
+  background: var(--color-point);
+  color: var(--color-on-point);
+}
+
+.button.ghost {
+  background: var(--color-bg);
+}
+
+.button.danger {
+  background: none;
+  color: var(--color-danger);
+}
+
+.button.outline {
+  border: 1px solid var(--color-line);
+  background: none;
+}
+
+.panel .button.danger {
+  border: 1px solid var(--color-danger);
+}
+
+/* ── 입력창 (아래에서 올라오는 창) ── */
+.sheet {
+  width: 100%;
+  max-width: var(--content-width);
+  max-height: 92vh;
+  margin: auto auto 0;
+  padding: 20px var(--space) calc(20px + env(safe-area-inset-bottom));
+  border: 0;
+  border-radius: 20px 20px 0 0;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.sheet[open] {
+  animation: sheet-up 0.2s ease;
+}
+
+.sheet::backdrop {
+  background: rgb(0 0 0 / 0.4);
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+}
+
+.sheet-title {
+  margin: 0 0 12px;
+  font-size: 19px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.field {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--color-subtext);
+  font-size: 14px;
+}
+
+.optional {
+  font-size: 12px;
+}
+
+.field input,
+.field textarea {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 16px; /* 16px보다 작으면 아이폰에서 화면이 확대돼요 */
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: 2px solid var(--color-point);
+  outline-offset: -1px;
+}
+
+.form-error {
+  min-height: 1.5em;
+  margin: 0 0 8px;
+  color: var(--color-danger);
+  font-size: 14px;
+}
+
+.sheet-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.install-steps {
+  margin: 0 0 20px;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+
+.install-steps li:last-child {
+  color: var(--color-subtext);
+  font-size: 14px;
+}
+
+.sheet-actions .button.ghost,
+.sheet-actions .button.primary {
+  flex: 1;
+}
+
+/* ── 알림 ── */
+.toast {
+  position: fixed;
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  left: 50%;
+  z-index: 40;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
